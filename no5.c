@@ -44,10 +44,6 @@ int main(int argc, char *argv[])
         {
             //printf("\n create thread success");
         }
-        i++;
-    }
-    i=0;
-    while(i<T){
         pthread_join(tid[i],NULL);
         i++;
     }

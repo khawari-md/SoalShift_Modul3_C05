@@ -28,6 +28,9 @@ int main(int argc, char *argv[])
     int i=1,j,T,N[100];
     int err;
     T=argc;
+    for (j=1;j<T;j++){
+        N[j]=atol(argv[j]);
+    }
     while(i<T)//looping membuat thread
     {
         err=pthread_create(&(tid[i]),NULL,&faktorial,(void *) N[i]);//membuat thread
@@ -39,10 +42,6 @@ int main(int argc, char *argv[])
         {
             //printf("\n create thread success");
         }
-        i++;
-    }
-    i=0;
-    while(i<T){
         pthread_join(tid[i],NULL);
         i++;
     }
