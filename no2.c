@@ -6,19 +6,36 @@
  
 pthread_t tid1;
 pthread_t tid2;
-int status;
+int status,win=0;
 int nomor;
+int skor1=0,skor2=0;
  
 void* satu(void *arg)
 {
     status = 0;
-    char nama1[100];
+    char nama[100];
+    int lubang[16];
     printf("masukkan nama player 1 : \n");
-    scanf("%[^\n]",nama1);
+    scanf("%[^\n]",nama);
     getchar();
-    printf("%s\n", nama1);
+    printf("%s\n", nama);
     status = 1;
- 
+    while(1)
+    {
+        while(status != 0)
+        {
+
+        }
+        if (win==1) break;
+        printf("giliran %s\n",nama);
+        skor1++;
+        status=1;
+        if(skor1==10 || skor2==10) break;
+    }
+    if (win==0) {
+        win=1;
+        printf("pemenangnya %s\n",nama);
+    }
     return NULL;
 }
 
@@ -29,12 +46,29 @@ void* dua(void *arg)
     {
 
     }
-    char nama2[100];
+    char nama[100];
     printf("masukkan nama player 2 : \n");
-    scanf("%[^\n]",nama2);
+    scanf("%[^\n]",nama);
     getchar();
-    printf("%s\n", nama2);
+    printf("%s\n", nama);
     status=0;
+    while(1)
+    {
+        while(status != 1)
+        {
+
+        }
+        if (win==1) break;
+        printf("giliran %s\n",nama);
+        skor2++;
+        status=0;
+        if(skor2==10 || skor1==10) break;
+    }
+    if (win==0) {
+        win=1;
+        printf("pemenangnya %s\n",nama);
+    }
+    return NULL;
 }
  
 int main(void)
