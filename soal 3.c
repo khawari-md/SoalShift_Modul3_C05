@@ -50,8 +50,8 @@ int main () 	{
 	while (1) {
 		int pil;
 		if(stats[1] <= 0 || stats[1] > 100 || stats[0] <= 0 || stats[0] > 100) {
-			printf("Status lohan = %d\n", stats[0]);
-			printf("Status kepiting = %d\n", stats[1]);
+			printf("Status kepiting = %d\n", stats[0]);
+			printf("Status lohan = %d\n", stats[1]);
 			printf("GAME OVER\n");
 			exit(EXIT_FAILURE);
 		}
