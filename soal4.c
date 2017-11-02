@@ -10,32 +10,30 @@
 
 pthread_t tid[100];
 
-void* cari(void *ptr){
-    char *N = (char*) ptr;
-    FILE* fo;
-    fo = fopen("Novel.txt","r");
-    char buf[200];
-    int n=0;
-    while (fgets(buf, 200, fo)!=NULL)
-    {
-        if((strstr(buf,N)) !=NULL){
-            n++;
-        }
+void* faktorial(void *ptr){
+    int i;
+    long long int f;
+    int N=(int) ptr;
+    f=1;
+    for(i=2;i<=N;i++){
+        f=f*i;
     }
-    fclose(fo);
-    printf("%s : %d\n",N,n);
+    printf ("faktorial %d : %lld\n",N,f);
     return NULL;
 }
 
 int main(int argc, char *argv[])
 {
     
-    int i=1,j,T;
+    int i=1,j,T,N[100];
     int err;
     T=argc;
+    for (j=1;j<T;j++){
+        N[j]=atol(argv[j]);
+    }
     while(i<T)//looping membuat thread
     {
-        err=pthread_create(&(tid[i]),NULL,&cari,(void *) argv[i]);//membuat thread
+        err=pthread_create(&(tid[i]),NULL,&faktorial,(void *) N[i]);//membuat thread
         if(err!=0)//cek error
         {
             printf("\n can't create thread : [%s]",strerror(err));
