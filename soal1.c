@@ -5,14 +5,24 @@
 #include <string.h>
 int main() {
 
-        key_t key = 1234;
+        key_t key1 = 1250,key2 = 1200,key3 = 1300;
         int *JumlahSenjata;
-        int shmid = shmget(key, sizeof(int), IPC_CREAT | 0666);
-        JumlahSenjata = shmat(shmid, NULL, 0); 
+        char *namaPenjual,*namaPembeli=NULL;
+        int shmid1 = shmget(key1, sizeof(int), IPC_CREAT | 0666);
+        JumlahSenjata = shmat(shmid1, NULL, 0);
+        int shmid2 = shmget(key2, sizeof(int), IPC_CREAT | 0666);
+        namaPenjual = shmat(shmid2, NULL, 0);
+        int shmid3 = shmget(key3, sizeof(int), IPC_CREAT | 0666);
+        namaPembeli = shmat(shmid3, NULL, 0); 
+
+        printf("masukkan nama penjual : ");
+        scanf("%[^\n]",namaPenjual);
 
         char NamaSenjata[6][10]={"MP4A1","PM2-V1","SPR-3","SS2-V5","SPG1-V3","MINE"};
         int in;
-        printf ("\n1. Tambah stock senjata \n2. Lihat stock senjata \n3. Exit Menu.\n\n");
+
+        printf("\nselamat datang di toko %s\n",namaPenjual);
+        printf ("Menu : \n1. Tambah stock senjata \n2. Lihat stock senjata \n3. Exit Menu\n4. Lihat Pembeli\n");
         while (scanf ("%d", &in)) {
 
                 if (in==1) {
@@ -47,8 +57,7 @@ int main() {
 
                                 JumlahSenjata[5] += nambah;
                         }
-                        printf ("%s sudah menambah %d unit\n", senjata, nambah);
-                        //printf ("%d %s", JumlahSenjata, NamaSenjata );
+                        printf ("%s sudah bertambah %d unit\n", senjata, nambah);
                 }
                 else if (in==2) {
                     for(int i=0;i<6;i++) {
@@ -56,15 +65,23 @@ int main() {
                         }
                 }
                 else if (in==3){
-                        break;
+                    break;
+                }
+                else if (in==4){
+                    if(namaPembeli==NULL) printf("tidak ada pembeli\n");
+                    else printf("pembeli : %s\n",namaPembeli);
                 }
                 else {
-                        printf("salah input");
+                    printf("salah input\n");
                 }
 
-        printf ("\n1. Tambah stock senjata \n2. Lihat stock senjata \n3. Exit Menu.\n\n");
+        printf ("\n1. Tambah stock senjata \n2. Lihat stock senjata \n3. Exit Menu\n4. Lihat Pembeli\n");
 
         }
         shmdt(JumlahSenjata);
-        shmctl(shmid, IPC_RMID, NULL);
+        shmctl(shmid1, IPC_RMID, NULL);
+        shmdt(namaPenjual);
+        shmctl(shmid2, IPC_RMID, NULL);
+        shmdt(namaPembeli);
+        shmctl(shmid3, IPC_RMID, NULL);
 }

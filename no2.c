@@ -8,15 +8,16 @@
 pthread_t tid1;
 pthread_t tid2;
 int status,win=0;
-int nomor;
 int skor1=0,skor2=0;
+bool lubang1[16],lubang2[16];
  
 void* satu(void *arg)
 {
     status = 0;
     int x,y,z;
-    char nama[100];
-    bool lubang[16]={false,0};
+    char nama[100],check;
+    
+    for(int b=0;b<16;b++) lubang1[b]=false;
     printf("masukkan nama player 1 : \n");
     scanf("%[^\n]",nama);
     getchar();
@@ -26,36 +27,53 @@ void* satu(void *arg)
     {
         while(status != 0)
         {
-
+            if(skor1>10 || skor2>10) break;
         }
+        
         if (win==1) break;
+        if(skor1>10 || skor2>10) break;
+
+        //CHECK SCORE
+        printf("giliran %s, apakah anda ingin mengecek skor? (y/n) ",nama);
+        scanf("%c",&check);
+        if(check=y) {
+            printf("skor %s : %d\n",nama,skor1);
+        }
+
+        //TURN
         printf("giliran %s\n berapa lubang yang ingin kamu isi : ",nama);
         scanf("%d",&x);
         for(int i=0;i<x;i++){
             printf("lubang yang ingin kamu isi bom : ");
             scanf("%d",&y);
-            lubang[y-1]=true;
+            while(lubang1[y-1]){
+                printf("lubang telah terisi, coba masukkan kedalam lubang yang lain : ");
+                scanf("%d",&y);
+            }
+            lubang1[y-1]=true;
         }
-        //skor1++;
         status=1;
-        if(skor1==10 || skor2==10) break;
 
         while(status != 0)
         {
-
+            if(skor1>10 || skor2>10) break;
         }
 
+        if(skor1>10 || skor2>10) break;
         printf("giliran %s\n lubang mana saja yang berisi bom\n",nama);
         for(int i=0;i<4;i++){
             printf("pilih lubang : ");
             scanf("%d",&z);
-            if(lubang[z-1]==true) printf("benar\n");
-            else printf("salah\n");
+            if(lubang2[z-1]) skor1++;
+            else skor2++;
+            if(skor1>10 || skor2>10) break;
         }
 
-        status=1;
+        if (win==1) break;
+        if(skor1>10 || skor2>10) break;
+
     }
-    if (win==0) {
+    if (win==0 && skor1>10) {
         win=1;
         printf("pemenangnya %s\n",nama);
     }
@@ -69,8 +87,9 @@ void* dua(void *arg)
     {
 
     }
-    char nama[100];
-    bool lubang[16]={false,0};
+    char nama[100],check;
+    bool lubang2[16];
+    for(int b=0;b<16;b++) lubang2[b]=false;
     int x,y,z;
     printf("masukkan nama player 2 : \n");
     scanf("%[^\n]",nama);
@@ -81,35 +100,47 @@ void* dua(void *arg)
     {
         while(status != 1)
         {
-
+            if(skor1>10 || skor2>10) break;
         }
+
         if (win==1) break;
-        printf("giliran %s\n lubang mana saja yang berisi bom\n",nama);
+        if(skor1>10 || skor2>10) break;
+
+        printf("giliran %s\n lubang mana saja yang berisi bom\n ",nama);
         for(int i=0;i<4;i++){
             printf("pilih lubang : ");
             scanf("%d",&z);
-            if(lubang[z-1]==true) printf("benar\n");
-            else printf("salah\n");
+            if(lubang1[z-1]) skor2++;
+            else skor1++;
+            if(skor1>10 || skor2>10) break;
         }
 
-        status=0;
-        
-        while(status != 1)
-        {
+        if (win==1) break;
+        if(skor2>10 || skor1>10) break;
 
+        //CHECK SCORE
+        printf("giliran %s, apakah anda ingin mengecek skor? (y/n)",nama);
+        scanf("%c",&check);
+        if(check=y) {
+            printf("skor %s : %d\n",nama,skor2);
         }
 
-        if(skor2==10 || skor1==10) break;
+        //TURN
         printf("giliran %s\n berapa lubang yang ingin kamu isi : ",nama);
         scanf("%d",&x);
         for(int i=0;i<x;i++){
             printf("lubang yang ingin kamu isi bom : ");
             scanf("%d",&y);
-            lubang[y-1]=true;
+            while(lubang2[y-1]){
+                printf("lubang telah terisi, coba masukkan kedalam lubang yang lain : ");
+                scanf("%d",&y);
+            }
+            lubang2[y-1]=true;
         }
+
         status=0;
     }
-    if (win==0) {
+    if (win==0 && skor2>10) {
         win=1;
         printf("pemenangnya %s\n",nama);
     }
