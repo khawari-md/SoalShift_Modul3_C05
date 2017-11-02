@@ -9,7 +9,7 @@ int stats[2];
 void *kepiting () {
 	while (1) {
 
-		sleep(1);
+		sleep(10);
 		stats[0] -= 10;
 		if (stats[0]<=0) {
 		stats [0]=0;
@@ -25,7 +25,7 @@ void *kepiting () {
 void *lohan () {
 	while (1) {
 
-		sleep(1);
+		sleep(10);
 		stats[1] -= 10;
 		if (stats[1]<=0){
 			stats [1]=0;
