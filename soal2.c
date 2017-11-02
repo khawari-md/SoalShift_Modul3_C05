@@ -15,7 +15,7 @@ void* satu(void *arg)
 {
     status = 0;
     int x,y,z;
-    char nama[100],check;
+    char nama[100];
     
     for(int b=0;b<16;b++) lubang1[b]=false;
     printf("masukkan nama player 1 : \n");
@@ -33,19 +33,30 @@ void* satu(void *arg)
         if (win==1) break;
         if(skor1>10 || skor2>10) break;
 
-        //CHECK SCORE
-        printf("giliran %s, apakah anda ingin mengecek skor? (y/n) ",nama);
+//CHECK SCORE
+        char check;
+        printf("giliran %s, apakah anda ingin mengecek skor? (y/n)\n",nama);
         scanf("%c",&check);
-        if(check=y) {
+        if(check=='y') {
             printf("skor %s : %d\n",nama,skor1);
         }
 
-        //TURN
+//TURN
         printf("giliran %s\n berapa lubang yang ingin kamu isi : ",nama);
         scanf("%d",&x);
+        while(x<1 || x>4){
+                printf("jumlah mengisi lubang harus berada diantara 1 sampai 4 : ");
+                scanf("%d",&x);
+            }
         for(int i=0;i<x;i++){
             printf("lubang yang ingin kamu isi bom : ");
             scanf("%d",&y);
+
+            while(y<1 || y>16){
+                printf("lubang hanya berjumlah 16, isi lubang antara 1 sampai 16 : ");
+                scanf("%d",&y);
+            }
+
             while(lubang1[y-1]){
                 printf("lubang telah terisi, coba masukkan kedalam lubang yang lain : ");
                 scanf("%d",&y);
@@ -59,6 +70,7 @@ void* satu(void *arg)
             if(skor1>10 || skor2>10) break;
         }
 
+//ANSWER
         if(skor1>10 || skor2>10) break;
         printf("giliran %s\n lubang mana saja yang berisi bom\n",nama);
         for(int i=0;i<4;i++){
@@ -68,7 +80,7 @@ void* satu(void *arg)
             else skor2++;
             if(skor1>10 || skor2>10) break;
         }
-
+        getchar();
         if (win==1) break;
         if(skor1>10 || skor2>10) break;
 
@@ -87,7 +99,7 @@ void* dua(void *arg)
     {
 
     }
-    char nama[100],check;
+    char nama[100];
     bool lubang2[16];
     for(int b=0;b<16;b++) lubang2[b]=false;
     int x,y,z;
@@ -106,6 +118,7 @@ void* dua(void *arg)
         if (win==1) break;
         if(skor1>10 || skor2>10) break;
 
+//ANSWER
         printf("giliran %s\n lubang mana saja yang berisi bom\n ",nama);
         for(int i=0;i<4;i++){
             printf("pilih lubang : ");
@@ -118,19 +131,31 @@ void* dua(void *arg)
         if (win==1) break;
         if(skor2>10 || skor1>10) break;
 
-        //CHECK SCORE
-        printf("giliran %s, apakah anda ingin mengecek skor? (y/n)",nama);
-        scanf("%c",&check);
-        if(check=y) {
+//CHECK SCORE
+        char check2;
+        printf("giliran %s, apakah anda ingin mengecek skor? (y/n)\n",nama);
+        getchar();
+        scanf("%c",&check2);
+        if(check2=='y') {
             printf("skor %s : %d\n",nama,skor2);
         }
 
-        //TURN
+//TURN
         printf("giliran %s\n berapa lubang yang ingin kamu isi : ",nama);
         scanf("%d",&x);
+        while(x<1 || x>4){
+                printf("jumlah mengisi lubang harus berada diantara 1 sampai 4 : ");
+                scanf("%d",&x);
+            }
         for(int i=0;i<x;i++){
             printf("lubang yang ingin kamu isi bom : ");
             scanf("%d",&y);
+
+            while(y<1 || y>16){
+                printf("lubang hanya berjumlah 16, isi lubang antara 1 sampai 16 : ");
+                scanf("%d",&y);
+            }
+
             while(lubang2[y-1]){
                 printf("lubang telah terisi, coba masukkan kedalam lubang yang lain : ");
                 scanf("%d",&y);
